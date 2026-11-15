@@ -1,0 +1,182 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "rex-inbox",
+  "title": "Rex Inbox",
+  "description": "A T3 Code–style inbox for Rex panes: pin, inbox, working, snoozed, and settled, driven by the Program Status Protocol (OSC 7501).",
+  "icon": "icon.png",
+  "author": "xheisenbugx",
+  "categories": [
+    "Developer Tools",
+    "Productivity"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "inbox",
+      "title": "Rex Inbox",
+      "subtitle": "Rex",
+      "description": "Triage Rex panes that report a program status: pinned, inbox, working, snoozed, and settled.",
+      "mode": "view",
+      "preferences": [
+        {
+          "name": "shortcutSettle",
+          "title": "Shortcut: Settle",
+          "description": "Key combo for “Settle”, such as cmd+e or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+e",
+          "placeholder": "cmd+e",
+          "required": false
+        },
+        {
+          "name": "shortcutMoveToInbox",
+          "title": "Shortcut: Move to Inbox",
+          "description": "Key combo for “Move to Inbox”, such as cmd+i or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+i",
+          "placeholder": "cmd+i",
+          "required": false
+        },
+        {
+          "name": "shortcutPin",
+          "title": "Shortcut: Pin / Unpin",
+          "description": "Key combo for “Pin / Unpin”, such as cmd+shift+p or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+shift+p",
+          "placeholder": "cmd+shift+p",
+          "required": false
+        },
+        {
+          "name": "shortcutSnooze",
+          "title": "Shortcut: Snooze",
+          "description": "Key combo for “Snooze”, such as cmd+s or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+s",
+          "placeholder": "cmd+s",
+          "required": false
+        },
+        {
+          "name": "shortcutUnsnooze",
+          "title": "Shortcut: Unsnooze",
+          "description": "Key combo for “Unsnooze”, such as opt+cmd+s or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "opt+cmd+s",
+          "placeholder": "opt+cmd+s",
+          "required": false
+        },
+        {
+          "name": "shortcutShowOutput",
+          "title": "Shortcut: Show Output",
+          "description": "Key combo for “Show Output”, such as cmd+o or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+o",
+          "placeholder": "cmd+o",
+          "required": false
+        },
+        {
+          "name": "shortcutRefresh",
+          "title": "Shortcut: Refresh",
+          "description": "Key combo for “Refresh”, such as cmd+r or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+r",
+          "placeholder": "cmd+r",
+          "required": false
+        },
+        {
+          "name": "shortcutCopyPath",
+          "title": "Shortcut: Copy Folder Path",
+          "description": "Key combo for “Copy Folder Path”, such as cmd+shift+. or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+shift+.",
+          "placeholder": "cmd+shift+.",
+          "required": false
+        },
+        {
+          "name": "shortcutCopyPaneId",
+          "title": "Shortcut: Copy Rex Pane ID",
+          "description": "Key combo for “Copy Rex Pane ID”, such as cmd+shift+c or ⌘⇧P. Modifiers: cmd, ctrl, opt, shift. Type “none” to remove it.",
+          "type": "textfield",
+          "default": "cmd+shift+c",
+          "placeholder": "cmd+shift+c",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "menu-bar",
+      "title": "Rex Inbox Menu Bar",
+      "subtitle": "Rex",
+      "description": "Show how many Rex panes need you, and jump to them, from the menu bar.",
+      "mode": "menu-bar",
+      "interval": "30s"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "rexPath",
+      "title": "Rex CLI Path",
+      "description": "Absolute path to the rex binary. Leave empty to auto-detect.",
+      "type": "textfield",
+      "required": false
+    },
+    {
+      "name": "client",
+      "title": "Rex Client",
+      "description": "Label or ID of the Rex app to drive when opening a pane. Leave empty to use the first connected app.",
+      "type": "textfield",
+      "required": false
+    },
+    {
+      "name": "autoSettleHours",
+      "title": "Auto-Settle After (Hours)",
+      "description": "Finished or idle panes with no new activity for this many hours move to Settled. Use 0 to only settle manually.",
+      "type": "textfield",
+      "default": "24",
+      "required": false
+    },
+    {
+      "name": "settleOnOpen",
+      "title": "Settle on Open",
+      "label": "Settle a finished pane when you open it",
+      "description": "Opening a done or idle pane marks it as seen, so it leaves the inbox.",
+      "type": "checkbox",
+      "default": true,
+      "required": false
+    },
+    {
+      "name": "wakeOnBlocked",
+      "title": "Wake Snoozed on Blocked",
+      "label": "Bring snoozed panes back when they need input",
+      "description": "A snoozed pane returns to the inbox early if it becomes blocked or fails.",
+      "type": "checkbox",
+      "default": true,
+      "required": false
+    },
+    {
+      "name": "includeIdle",
+      "title": "Include Idle Panes",
+      "label": "Show panes whose only status is idle",
+      "description": "When off, panes whose program only reports idle are hidden.",
+      "type": "checkbox",
+      "default": true,
+      "required": false
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.104.0",
+    "@raycast/utils": "^2.2.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.0.4",
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.10",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "scripts": {
+    "build": "ray build",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint"
+  }
+}
